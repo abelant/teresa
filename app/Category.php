@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     
-    protected $fillable = ['name', 'country', 'about', 'what', 'how'];
+    protected $fillable = ['name'];
+    protected $with = ['countries'];
+
+    public function countries()
+    {
+        return $this->hasMany('App\Country');
+    }
 
 }

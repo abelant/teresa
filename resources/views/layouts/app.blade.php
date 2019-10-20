@@ -30,6 +30,23 @@
         margin: 0;
         padding: 0;
       }
+      .ui-dialog{
+            height:85% !important;
+            width:30% !important;
+            background:#343a40;  
+            color: #fff !important;
+            opacity: 0.8;
+            margin-left:65% !important;
+        }
+        .ui-widget-header,.ui-state-default, ui-button{  
+            background:#343a40;  
+            border: 0px solid #b9cd6d !important;      
+            color: #FFFFFF;  
+            font-weight: bold; 
+         } 
+         .content{
+             color:white !important;
+         }
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -160,40 +177,59 @@
           ]
         });
       }
-      $(document).ready(function() {
+    $(document).ready(function() {
         $('#dialog').dialog({
             autoOpen: false
         });
         $('.ui-dialog-title').remove()
-      })
-      
-      $('.category').click(function() {
-        var country = $(this).data('country');
-        var about = $(this).data('about');
-        var what = $(this).data('what');
-        var how = $(this).data('how');
-
-        console.log(country);
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode( { 'address': country}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                var newLatLng = new google.maps.LatLng( results[0].geometry.location.lat(), results[0].geometry.location.lng() - 50)
-                results[0].geometry.viewport.ka.g += 3; 
-                results[0].geometry.viewport.ka.h += 3; 
-                map.fitBounds(results[0].geometry.viewport);
+        var markers = [];
+        $('.category').click(function() {
+        
+            var countries = $(this).data('countries');
+        
+            for(var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
             }
+
+            for(var i = 0; i < countries.length; i++) {
+                var position = { lat: Number(countries[i].lat), lng: Number(countries[i].lng) };
+                console.log(position);
+                markers[i] = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    text: 'This is text' + i
+                });
+                google.maps.event.addDomListener(markers[i], 'click', function() {
+                    var marker = this
+                    var isOpen = $( "#dialog" ).dialog( "isOpen" );
+                    if(isOpen) {
+                        $('#dialog').dialog('close');
+                    }
+                    $('.title').html(marker.text);
+                    $('#dialog').dialog('open');
+                });
+            }
+        
+            //     var country = $(this).data('country');
+            //     var about = $(this).data('about');
+            //     var what = $(this).data('what');
+            //     var how = $(this).data('how');
+
+            //     var isOpen = $( "#dialog" ).dialog( "isOpen" );
+            //     if(isOpen) {
+            //         $('#dialog').dialog('close');
+            //     }
+            //         $('.title').html(country);
+            //         $('.about').html(about);
+            //         $('.what').html(what);
+            //         $('.how').html(how);
+            //         $('#dialog').dialog('open');
         });
-        var isOpen = $( "#dialog" ).dialog( "isOpen" );
-        if(isOpen) {
-            $('#dialog').dialog('close');
-        }
-            $('.title').html(country);
-            $('.about').html(about);
-            $('.what').html(what);
-            $('.how').html(how);
-            $('#dialog').dialog('open');
-       
       });
+
+      
+      
+      
     </script>
     
    
@@ -201,26 +237,5 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhftpWqkNWN0DoXB95StMFofnsaD4AEA0&callback=initMap"
     async defer></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script></script>
-    <style>  
-        .ui-dialog{
-            height:85% !important;
-            width:30% !important;
-            background:#343a40;  
-            color: #fff !important;
-            opacity: 0.8;
-            margin-left:65% !important;
-        }
-        .ui-widget-header,.ui-state-default, ui-button{  
-            background:#343a40;  
-            border: 0px solid #b9cd6d !important;      
-            color: #FFFFFF;  
-            font-weight: bold; 
-         } 
-         .content{
-             color:white !important;
-         }
-      </style>  
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
 </html>
