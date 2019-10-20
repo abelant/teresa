@@ -16,11 +16,23 @@ class CreateCountriesTable extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->text('about')->nullable();
-            $table->text('what')->nullable();
-            $table->text('how')->nullable();
-            $table->string('lat');
-            $table->string('lng');
+            $table->string('date')->nullable();
+            $table->string('hazard_type')->nullable();
+            $table->string('trigger')->nullable();
+            $table->string('fatalities')->nullable();
+            $table->string('injuries')->nullable();
+            $table->string('size')->nullable();
+            $table->string('population')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('depth')->nullable();
+            $table->string('magnitude')->nullable();
+            $table->string('minimum_distance')->nullable();
+            $table->string('azimuthal_gap')->nullable();
+            $table->string('origin_time')->nullable();
+            $table->string('confidence')->nullable();
+            $table->string('text')->nullable();
+            $table->string('wattage')->nullable();
             $table->unsignedInteger('category_id');
             $table->timestamps();
         });
