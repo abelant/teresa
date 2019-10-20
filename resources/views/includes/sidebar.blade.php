@@ -14,11 +14,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           @foreach($categories as $category)
-          <li class="nav-item category"  
-              data-country="{{ $category->country }}"
-              data-about="{{ $category->about }}"
-              data-how="{{ $category->how }}"
-              data-what="{{ $category->what }}">
+          <li class="nav-item category" data-countries="{{$category->countries}}">
             <a href="#" class="nav-link">
               <p>
                 {{ $category->name }}
